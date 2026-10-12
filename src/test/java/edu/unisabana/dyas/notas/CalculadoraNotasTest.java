@@ -46,4 +46,20 @@ class CalculadoraNotasTest {
     void rechazaDefinitivaFueraDeRango() {
         assertThrows(IllegalArgumentException.class, () -> calculadora.aprueba(5.5));
     }
+
+    @ParameterizedTest(name = "{0} -> {1}")
+    @CsvSource({
+            "4.5, Excelente",
+            "4.0, Sobresaliente",
+            "3.0, Aprobado",
+            "2.9, Reprobado"
+    })
+    void calculaElConceptoSegunLaDefinitiva(double definitiva, String esperado) {
+        assertEquals(esperado, calculadora.concepto(definitiva));
+    }
+
+    @Test
+    void rechazaUnaDefinitivaFueraDeRango() {
+        assertThrows(IllegalArgumentException.class, () -> calculadora.concepto(5.1));
+    }
 }
