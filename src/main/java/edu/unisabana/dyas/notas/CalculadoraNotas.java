@@ -30,7 +30,20 @@ public class CalculadoraNotas {
     }
 
     public double notaNecesariaTercerCorte(double corte1, double corte2) {
-        return 0.0;
+        BigDecimal acumulado = validar(corte1, "corte 1").multiply(PESO_CORTE_1)
+                .add(validar(corte2, "corte 2").multiply(PESO_CORTE_2));
+        BigDecimal faltante = NOTA_APROBATORIA.subtract(acumulado);
+        BigDecimal necesaria = faltante.divide(PESO_CORTE_3, 10, RoundingMode.HALF_UP)
+                .setScale(1, RoundingMode.HALF_UP);
+
+        if (necesaria.compareTo(NOTA_MAXIMA) > 0) {
+            throw new IllegalStateException(
+                    "Ya no es posible aprobar: se necesitaría una nota de " + necesaria + " en el tercer corte");
+        }
+        if (necesaria.compareTo(NOTA_MINIMA) < 0) {
+            return NOTA_MINIMA.doubleValue();
+        }
+        return necesaria.doubleValue();
     }
 
     public boolean aprueba(double definitiva) {
