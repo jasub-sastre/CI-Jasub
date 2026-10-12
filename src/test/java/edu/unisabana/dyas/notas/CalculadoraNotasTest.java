@@ -18,7 +18,7 @@ class CalculadoraNotasTest {
             "5.0, 5.0, 5.0, 5.0",
             "0.0, 0.0, 0.0, 0.0",
             "3.0, 3.0, 3.0, 3.0",
-            "4.0, 3.5, 2.0, 999.0", // ROTO A PROPÓSITO para E10: el valor correcto es 3.1
+            "4.0, 3.5, 2.0, 3.1", // 3.05 se redondea hacia arriba
             "2.0, 2.5, 3.5, 2.8"
     })
     void calculaLaDefinitivaPonderada(double c1, double c2, double c3, double esperada) {
