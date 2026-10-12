@@ -29,6 +29,10 @@ public class CalculadoraNotas {
         return definitiva.setScale(1, RoundingMode.HALF_UP).doubleValue();
     }
 
+    public double notaNecesariaTercerCorte(double corte1, double corte2) {
+        return 0.0;
+    }
+
     public boolean aprueba(double definitiva) {
         return validar(definitiva, "definitiva").compareTo(NOTA_APROBATORIA) >= 0;
     }
