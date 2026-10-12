@@ -56,3 +56,28 @@ jobs:
             target/surefire-reports/
             target/site/jacoco/
           if-no-files-found: ignore
+
+  # Reto opcional: build en matriz. Corre el mismo "mvn verify" en dos versiones de Java
+  # en paralelo, para demostrar compatibilidad entre versiones. Este job es independiente
+  # del job "build-y-pruebas": no es un check requerido por el ruleset, así que agregarlo
+  # no afecta el nombre exacto del check obligatorio ("Build, pruebas y cobertura").
+  matrix-build:
+    name: Matriz Java (${{ matrix.java }})
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: ['17', '21']
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v7
+
+      - name: Instalar Java ${{ matrix.java }}
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: ${{ matrix.java }}
+          cache: maven
+
+      - name: Compilar y probar en Java ${{ matrix.java }}
+        run: mvn -B verify
